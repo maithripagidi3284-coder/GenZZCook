@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join as a Cook Partner | InstantChef</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="chef-auth-body">
+
+    <div class="chef-login-wrapper setup-wide">
+        <div class="brand-accent-line"></div>
+        
+        <div class="chef-card-inner">
+            <div class="chef-auth-header">
+                <a href="index.html" class="chef-back-home">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Homepage
+                </a>
+                <div class="chef-logo-icon">🧑‍🍳</div>
+                <h2>Create Your Cook Profile</h2>
+                <p>Join as a platform partner to start receiving high-paying party cooking shifts nearby.</p>
+            </div>
+
+<form id="interactive-signup-form" class="chef-animated-form">
+                
+          <div class="form-row-split">
+    <div class="chef-input-block">
+        <label for="chef-name">Full Name</label>
+        <div class="input-with-icon">
+            <i class="fa-solid fa-user icon-decor"></i>
+            <input type="text" id="chef-name" placeholder="e.g., Rohan Mehta" required>
+        </div>
+    </div>
+    <div class="chef-input-block">
+        <label for="chef-age">Age</label>
+        <div class="input-with-icon">
+            <i class="fa-solid fa-calendar icon-decor"></i>
+            <input type="number" id="chef-age" min="18" max="90" placeholder="Min 18" required>
+        </div>
+    </div>
+</div>
+
+<div class="form-row-split">
+    <div class="chef-input-block">
+        <label for="chef-email">Email Address</label>
+        <div class="input-with-icon">
+            <i class="fa-solid fa-envelope icon-decor"></i>
+            <input type="email" id="chef-email" placeholder="chef.rohan@gmail.com" required>
+        </div>
+    </div>
+    <div class="chef-input-block">
+        <label for="chef-phone">Mobile Phone Number</label>
+        <div class="input-with-icon">
+            <i class="fa-solid fa-phone icon-decor"></i>
+            <input type="tel" id="chef-phone" placeholder="98765 43210" pattern="[0-9]{10,13}" required>
+        </div>
+    </div>
+</div>
+
+                <div class="chef-input-block">
+                    <label for="chef-password">Create Portal Access Password</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-shield-halved icon-decor"></i>
+                        <input type="password" id="chef-password" placeholder="Choose a strong secure password..." minlength="6" required>
+                    </div>
+                </div>
+
+                <div class="form-row-split">
+                    <div class="chef-input-block">
+                        <label for="chef-cuisine">Primary Cuisine Specialty</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-utensils icon-decor"></i>
+                            <select id="chef-cuisine" required>
+                                <option value="" disabled selected>Select Cuisine Group...</option>
+                                <option value="south-indian">South Indian</option>
+                                <option value="north-indian">North Indian</option>
+                                <option value="italian">Italian (Pasta & Live Pizza)</option>
+                                <option value="korean">Korean Street Style</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chef-input-block">
+                        <label for="chef-dishes">Signature Dishes You Cook</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-mortar-pestle icon-decor"></i>
+                            <input type="text" id="chef-dishes" placeholder="e.g., Biryani, White Sauce Pasta" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-split">
+                    <div class="chef-input-block">
+                        <label for="chef-exp">Experience Level: <span id="exp-slider-num" class="slider-counter-accent">5</span> Years</label>
+                        <input type="range" id="chef-exp" min="1" max="10" value="5" class="style-slider-track">
+                    </div>
+                    <div class="chef-input-block">
+                        <label for="chef-location">Service Location / Area</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-location-dot icon-decor"></i>
+                            <input type="text" id="chef-location" placeholder="e.g., Gachibowli / Sector 62" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chef-input-block">
+                    <label for="chef-rate">Hourly Charging Rate (₹)</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-indian-rupee-sign icon-decor"></i>
+                        <input type="number" id="chef-rate" placeholder="How much do you charge for 1 hour shift?" min="100" required>
+                    </div>
+                </div>
+                <div class="form-row-split">
+    <div class="chef-input-block">
+        <label for="chef-avatar">Profile Photo</label>
+        <div class="input-with-icon file-upload-wrapper">
+            <i class="fa-solid fa-camera icon-decor"></i>
+            <input type="file" id="chef-avatar" accept="image/*" required>
+            <div class="file-upload-trigger">
+                <span id="file-chosen-text"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Profile Image</span>
+            </div>
+        </div>
+    </div>
+
+<div class="chef-input-block">
+    <div class="textarea-header-row">
+        <label for="chef-bio">About Me (Your Culinary Journey)</label>
+        <span id="char-counter-label" class="char-counter">0 / 450</span>
+    </div>
+    <div class="textarea-with-icon">
+        <i class="fa-solid fa-quote-left textarea-icon-decor"></i>
+        <textarea id="chef-bio" maxlength="450" placeholder="Tell hosts about your cooking experience, favorite kitchen styles, or specialized catering background (Maximum 450 characters)..." required></textarea>
+    </div>
+</div>
+<div class="chef-input-block">
+    <label class="section-micro-label">Gender Identification</label>
+    <div class="chef-radio-grid gender-three-columns">
+        
+        <label class="chef-custom-radio">
+            <input type="radio" name="chef-gender" value="male" checked>
+            <span class="radio-card-design">
+                <i class="fa-solid fa-mars"></i>
+                <strong class="option-title">Male</strong>
+            </span>
+        </label>
+
+        <label class="chef-custom-radio">
+            <input type="radio" name="chef-gender" value="female">
+            <span class="radio-card-design">
+                <i class="fa-solid fa-venus"></i>
+                <strong class="option-title">Female</strong>
+            </span>
+        </label>
+
+        <label class="chef-custom-radio">
+            <input type="radio" name="chef-gender" value="other">
+            <span class="radio-card-design">
+                <i class="fa-solid fa-genderless"></i>
+                <strong class="option-title">Other</strong>
+            </span>
+        </label>
+        
+    </div>
+</div>
+
+                <div class="chef-input-block">
+                    <label class="section-micro-label">Job Category Commitment Mode</label>
+                    <div class="chef-radio-grid">
+                        <label class="chef-custom-radio">
+                            <input type="radio" name="job-commitment" value="part-time" checked>
+                            <span class="radio-card-design">
+                                <i class="fa-solid fa-business-time"></i>
+                                <strong class="option-title">Part-Time</strong>
+                                <span class="option-desc">Hourly Gig Shifts</span>
+                            </span>
+                        </label>
+
+                        <label class="chef-custom-radio">
+                            <input type="radio" name="job-commitment" value="full-time">
+                            <span class="radio-card-design">
+                                <i class="fa-solid fa-briefcase"></i>
+                                <strong class="option-title">Full-Time</strong>
+                                <span class="option-desc">Dedicated Schedules</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-chef-login-submit" id="signup-btn-lock">
+                    <span class="btn-text-state">Submit Application & Create Account</span>
+                    <span class="btn-loading-state"><i class="fa-solid fa-circle-notch fa-spin"></i> Processing Profile...</span>
+                </button>
+            </form>
+            
+            <div class="chef-auth-footer">
+                <p>Already registered with us? <a href="login.html" class="accent-redirect-link">Login to your portal here <i class="fa-solid fa-chevron-right"></i></a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inline script block explicitly for real-time tracking slider changes inside the registration layout
+        const sliderInput = document.getElementById('chef-exp');
+        const sliderLabel = document.getElementById('exp-slider-num');
+        if(sliderInput && sliderLabel) {
+            sliderInput.addEventListener('input', (e) => { 
+                sliderLabel.textContent = e.target.value; 
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+    <div id="success-card-overlay" class="success-modal-overlay">
+        <div class="success-card">
+            <div class="success-checkmark-circle">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3>Chef Profile Verified!</h3>
+            <p>Your digital profile is compiled and active on the network with the credentials below:</p>
+            
+            <div class="credential-display-box">
+                <div class="credential-field-row">
+                    <span class="field-title">Cook Partner</span>
+                    <span id="card-chef-name" class="field-value">--</span>
+                </div>
+                <div class="credential-field-row">
+                    <span class="field-title">Cuisine Class</span>
+                    <span id="card-chef-cuisine" class="field-value">--</span>
+                </div>
+                <div class="credential-field-row">
+                    <span class="field-title">Rate Parameter</span>
+                    <span id="card-chef-rate" class="field-value">--</span>
+                </div>
+                <div class="credential-field-row">
+                    <span class="field-title">Primary Contact</span>
+                    <span id="card-chef-email" class="field-value">--</span>
+                </div>
+            </div>
+
+            <button type="button" id="success-card-dismiss-btn" class="btn-success-acknowledge">
+                Proceed to Partner Portal Login
+            </button>
+            <span id="auto-redirect-counter" class="redirect-countdown-tracker">AUTOMATIC ROUTING IN 5S...</span>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstantChef | On-Demand Cooks for Parties & Events</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-banner">
+        ⚡ <span><strong>Live Status:</strong> 18 local cooks available in your area right now. Average arrival time: 22 mins.</span>
+    </div>
+
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">🍳 InstantChef</a>
+            <ul class="nav-links">
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#explore-chefs">Browse Cooks</a></li>
+                <li><a href="signup.html" class="btn-earn">Earn as a Cook</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Host the Perfect Party. <br>We'll Handle the Cooking.</h1>
+            <p>Book talented local home cooks and culinary students. Arriving at your kitchen in 15–30 minutes.</p>
+            
+            <div class="search-widget">
+                <div class="search-input-group">
+                    <span class="input-icon">📍</span>
+                    <input type="text" id="user-location" placeholder="Enter party address...">
+                </div>
+                <div class="search-input-group">
+                    <span class="input-icon">🍕</span>
+                    <select id="cuisine-specialty">
+                        <option value="">What's the menu vibe?</option>
+                        <option value="kitty-starters">Kitty Party Starters & Snacks</option>
+                        <option value="italian">Italian (Pasta & Live Pizza)</option>
+                        <option value="indian">North/South Indian Main Course</option>
+                        <option value="chinese">Indo-Chinese Street Style</option>
+                        <option value="desserts">Desserts & Baking</option>
+                    </select>
+                </div>
+                <button class="btn-search">Find Nearby Cooks</button>
+            </div>
+
+            <div class="quick-tags">
+                <span>Popular:</span>
+                <button class="tag-link">💃 Kitty Party</button>
+                <button class="tag-link">🎂 Birthday Bash</button>
+                <button class="tag-link">🥂 Private Mixer</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="info-section">
+        <h2 class="section-title">3 Steps to a Stress-Free Party</h2>
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <h3>Check ETA</h3>
+                <p>Enter your location to find verified cooks instantly ready to travel to your venue.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <h3>Match Specialties</h3>
+                <p>Review profiles to see real signatures. Pick a student or part-time pro who matches your exact dish list.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <h3>Enjoy Your Guests</h3>
+                <p>The cook arrives, uses your ingredients, prepares fresh food, and leaves your kitchen spotless.</p>
+            </div>
+        </div>
+    </section>
+
+    <main id="explore-chefs" class="marketplace-section">
+        <div class="marketplace-header">
+            <h2>Cooks Available Right Now</h2>
+            <p>Filtered by closest proximity to you</p>
+        </div>
+        
+        <div class="chef-grid">
+            
+            <div class="chef-card">
+                <div class="chef-badge-container">
+                    <span class="status-badge live">● Online</span>
+                    <span class="role-badge student">Culinary Student</span>
+                </div>
+                
+                <div class="chef-profile-main">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=150" alt="Rahul K." class="chef-img">
+                    <div class="chef-meta">
+                        <h3>Rahul Kumar</h3>
+                        <p class="eta-text">⚡ <strong>15 mins away</strong> (1.2 miles)</p>
+                        <p class="rating">⭐ 4.9 <span class="review-count">(18 parties)</span></p>
+                    </div>
+                </div>
+
+                <div class="chef-profile-body">
+                    <p class="chef-bio">Hospitality student looking for weekend gigs. Absolute expert in quick-bites, mocktails, and continental platters perfect for kitty parties.</p>
+                    
+                    <div class="specialty-tags">
+                        <span class="dish-tag">Signature Tacos</span>
+                        <span class="dish-tag">Slider Platters</span>
+                        <span class="dish-tag">Pasta Bar</span>
+                    </div>
+                    
+                    <div class="card-action">
+                        <div class="price-estimate">From <strong>₹499</strong> / event</div>
+                        <button class="btn-book">View Menu & Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chef-card">
+                <div class="chef-badge-container">
+                    <span class="status-badge live">● Online</span>
+                    <span class="role-badge part-time">Part-Time Pro</span>
+                </div>
+                
+                <div class="chef-profile-main">
+                    <img src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16?q=80&w=150" alt="Simran J." class="chef-img">
+                    <div class="chef-meta">
+                        <h3>Simran Jeet</h3>
+                        <p class="eta-text">⚡ <strong>25 mins away</strong> (3.5 miles)</p>
+                        <p class="rating">⭐ 4.8 <span class="review-count">(34 parties)</span></p>
+                    </div>
+                </div>
+
+                <div class="chef-profile-body">
+                    <p class="chef-bio">Passionate home baker and cook. I manage high-end traditional North Indian custom dinner courses and fusion snack platters seamlessly.</p>
+                    
+                    <div class="specialty-tags">
+                        <span class="dish-tag">Paneer Tikka</span>
+                        <span class="dish-tag">Gourmet Chaat</span>
+                        <span class="dish-tag">Fusion Desserts</span>
+                    </div>
+                    
+                    <div class="card-action">
+                        <div class="price-estimate">From <strong>₹699</strong> / event</div>
+                        <button class="btn-book">View Menu & Book</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 InstantChef App. Connecting local talent with hosts everywhere.</p>
+    </footer>
+<script src="script.js"></script>
+</body>
+</html>
