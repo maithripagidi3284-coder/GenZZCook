@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChefConnect — Book a Private Chef at Home</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --saffron: #E8622A;
+    --saffron-light: #FDF0EA;
+    --saffron-mid: #F4A278;
+    --cream: #FBF8F4;
+    --ink: #1C1917;
+    --ink-2: #44403C;
+    --ink-3: #78716C;
+    --ink-4: #A8A29E;
+    --border: #E7E2DC;
+    --white: #FFFFFF;
+    --green: #2D6A4F;
+    --green-light: #D8F3DC;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--saffron);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+
+  .logo span { color: var(--ink); }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--ink-2);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+
+  .nav-links a:hover { color: var(--saffron); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: all .18s;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover { background: var(--cream); border-color: var(--ink-4); }
+
+  .btn-primary {
+    background: var(--saffron);
+    color: white;
+  }
+
+  .btn-primary:hover { background: #D4561E; transform: translateY(-1px); }
+
+  .btn-large {
+    padding: 13px 28px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--saffron);
+    border: 1.5px solid var(--saffron);
+  }
+
+  .btn-outline:hover { background: var(--saffron-light); }
+
+  /* ── PAGE SYSTEM ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 5% 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--saffron-light);
+    color: var(--saffron);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--saffron);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--ink-3);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .hero-stat-label { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+
+  .hero-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .hero-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+
+  .hero-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.08); }
+
+  .hero-card-img {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: var(--saffron-light);
+  }
+
+  .hero-card:nth-child(2) .hero-card-img { background: #FEF3C7; }
+  .hero-card:nth-child(3) .hero-card-img { background: #D1FAE5; }
+  .hero-card:nth-child(4) .hero-card-img { background: #EDE9FE; }
+
+  .hero-card-body { padding: 12px; }
+
+  .hero-card-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .hero-card-cuisine { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+
+  .hero-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .hero-card-rate { font-size: 13px; font-weight: 600; color: var(--saffron); }
+
+  .stars { font-size: 11px; color: #F59E0B; }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    padding: 70px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    letter-spacing: -.5px;
+    margin-bottom: 12px;
+  }
+
+  .section-sub { font-size: 15px; color: var(--ink-3); max-width: 500px; }
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .how-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+
+  .how-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--saffron-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .how-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .how-card p { font-size: 14px; color: var(--ink-3); line-height: 1.6; }
+
+  /* ── CHEF LISTING ── */
+  .filter-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+
+  .filter-label { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+
+  .filter-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--ink-2);
+    transition: all .15s;
+  }
+
+  .filter-chip:hover, .filter-chip.active {
+    background: var(--saffron);
+    color: white;
+    border-color: var(--saffron);
+  }
+
+  .chefs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .chef-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+
+  .chef-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.09); }
+
+  .chef-card-header {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    position: relative;
+  }
+
+  .chef-card-header.c1 { background: linear-gradient(135deg, #FDF0EA, #F9D4BE); }
+  .chef-card-header.c2 { background: linear-gradient(135deg, #FEF9C3, #FDE68A); }
+  .chef-card-header.c3 { background: linear-gradient(135deg, #D1FAE5, #A7F3D0); }
+  .chef-card-header.c4 { background: linear-gradient(135deg, #EDE9FE, #DDD6FE); }
+  .chef-card-header.c5 { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); }
+  .chef-card-header.c6 { background: linear-gradient(135deg, #DBEAFE, #BFDBFE); }
+
+  .avail-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--green);
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  .avail-badge.busy {
+    background: #6B7280;
+  }
+
+  .chef-card-body { padding: 16px; }
+
+  .chef-name { font-size: 16px; font-weight: 600; color: var(--ink); }
+
+  .chef-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .chef-cuisines {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .cuisine-tag {
+    background: var(--saffron-light);
+    color: var(--saffron);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 12px;
+  }
+
+  .chef-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .chef-rate { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .chef-rate span { font-size: 12px; font-weight: 400; color: var(--ink-3); }
+
+  /* ── CHEF PROFILE ── */
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 28px;
+    padding: 32px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .profile-hero {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .profile-cover {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    background: linear-gradient(135deg, #FDF0EA, #F9D4BE);
+  }
+
+  .profile-info { padding: 24px; }
+
+  .profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  .profile-stats {
+    display: flex;
+    gap: 24px;
+    margin: 16px 0;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .profile-stat-num { font-size: 20px; font-weight: 600; color: var(--ink); }
+  .profile-stat-label { font-size: 11px; color: var(--ink-3); }
+
+  .profile-bio { font-size: 14px; color: var(--ink-2); line-height: 1.7; margin: 16px 0; }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .portfolio-item {
+    aspect-ratio: 1;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: var(--saffron-light);
+  }
+
+  .portfolio-item:nth-child(2) { background: #FEF9C3; }
+  .portfolio-item:nth-child(3) { background: #D1FAE5; }
+  .portfolio-item:nth-child(4) { background: #EDE9FE; }
+  .portfolio-item:nth-child(5) { background: #FCE7F3; }
+  .portfolio-item:nth-child(6) { background: #DBEAFE; }
+
+  .booking-panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: sticky;
+    top: 80px;
+  }
+
+  .booking-panel h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-2);
+    margin-bottom: 6px;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .15s;
+  }
+
+  .form-input:focus, .form-select:focus { border-color: var(--saffron); }
+
+  .total-box {
+    background: var(--saffron-light);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-label { font-size: 13px; color: var(--ink-2); }
+  .total-amount { font-size: 22px; font-weight: 700; color: var(--saffron); }
+
+  .total-breakdown { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+  /* ── CALENDAR ── */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-top: 12px;
+  }
+
+  .cal-day-label { font-size: 11px; font-weight: 500; color: var(--ink-3); text-align: center; padding: 4px 0; }
+
+  .cal-day {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+
+  .cal-day:hover:not(.booked):not(.past) { background: var(--saffron-light); color: var(--saffron); }
+  .cal-day.selected { background: var(--saffron); color: white; }
+  .cal-day.booked { background: var(--cream); color: var(--ink-4); cursor: not-allowed; text-decoration: line-through; }
+  .cal-day.past { color: var(--ink-4); cursor: not-allowed; }
+  .cal-day.today { border: 1.5px solid var(--saffron); color: var(--saffron); font-weight: 600; }
+
+  /* ── CHEF DASHBOARD ── */
+  .dashboard-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 64px);
+  }
+
+  .sidebar {
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+  }
+
+  .sidebar-section {
+    padding: 0 16px;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 0 12px;
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition: all .15s;
+    text-decoration: none;
+  }
+
+  .sidebar-item:hover { background: var(--cream); color: var(--ink); }
+  .sidebar-item.active { background: var(--saffron-light); color: var(--saffron); }
+
+  .sidebar-icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .dash-content { padding: 28px; background: var(--cream); }
+
+  .dash-greeting { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .dash-date { font-size: 13px; color: var(--ink-3); margin-bottom: 28px; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .stat-card-label { font-size: 12px; color: var(--ink-3); margin-bottom: 6px; }
+  .stat-card-num { font-size: 26px; font-weight: 700; color: var(--ink); }
+  .stat-card-sub { font-size: 12px; color: var(--green); margin-top: 4px; }
+
+  .dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+  }
+
+  .dash-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .dash-card-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+
+  .order-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .order-row:last-child { border-bottom: none; }
+
+  .order-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--saffron-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .order-name { font-size: 14px; font-weight: 500; }
+  .order-detail { font-size: 12px; color: var(--ink-3); }
+
+  .order-amount { font-size: 14px; font-weight: 600; color: var(--ink); margin-left: auto; }
+
+  .order-status {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+
+  .status-confirmed { background: #D1FAE5; color: #065F46; }
+  .status-pending { background: #FEF9C3; color: #92400E; }
+  .status-completed { background: #EDE9FE; color: #4C1D95; }
+
+  /* ── BAR CHART ── */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 120px;
+    margin-top: 8px;
+  }
+
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+  .bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    background: var(--saffron);
+    opacity: .7;
+    transition: opacity .2s;
+  }
+
+  .bar:hover { opacity: 1; }
+  .bar.current { opacity: 1; background: var(--saffron); }
+
+  .bar-label { font-size: 10px; color: var(--ink-3); }
+
+  /* ── MINI CALENDAR ── */
+  .mini-cal { margin-top: 8px; }
+  .mini-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .mini-cal-month { font-size: 13px; font-weight: 600; }
+  .mini-cal-nav { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--ink-3); padding: 2px 6px; }
+
+  /* ── REVIEWS ── */
+  .review-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .review-header { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+  .review-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--saffron-light); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .review-name { font-size: 13px; font-weight: 600; }
+  .review-date { font-size: 11px; color: var(--ink-3); }
+  .review-text { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+
+  /* ── PAYMENT MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28,25,23,.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    width: 420px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-title { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+  .modal-sub { font-size: 14px; color: var(--ink-3); margin-bottom: 24px; }
+
+  .payment-method {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color .15s;
+  }
+
+  .payment-method:hover, .payment-method.selected { border-color: var(--saffron); background: var(--saffron-light); }
+
+  .payment-method-icon { font-size: 22px; }
+  .payment-method-name { font-size: 14px; font-weight: 500; }
+  .payment-method-detail { font-size: 12px; color: var(--ink-3); }
+
+  .success-screen { text-align: center; padding: 20px 0; }
+  .success-icon { font-size: 64px; margin-bottom: 16px; }
+  .success-title { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: var(--ink-3); margin-bottom: 24px; }
+
+  /* ── ENROLL PAGE ── */
+  .enroll-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 64px);
+  }
+
+  .enroll-left {
+    background: var(--saffron);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+  }
+
+  .enroll-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .enroll-left p { font-size: 15px; opacity: .85; line-height: 1.7; margin-bottom: 32px; }
+
+  .enroll-perk {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+
+  .enroll-perk-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .enroll-right {
+    padding: 48px;
+    background: var(--cream);
+    overflow-y: auto;
+  }
+
+  .enroll-right h3 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .enroll-right p { font-size: 14px; color: var(--ink-3); margin-bottom: 28px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .cuisine-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .cuisine-cb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    background: var(--white);
+    transition: all .15s;
+  }
+
+  .cuisine-cb:hover { border-color: var(--saffron); }
+  .cuisine-cb input { accent-color: var(--saffron); }
+
+  .upload-box {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s;
+    background: var(--white);
+  }
+
+  .upload-box:hover { border-color: var(--saffron); }
+  .upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-text { font-size: 13px; color: var(--ink-3); }
+
+  .progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 32px;
+  }
+
+  .progress-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+
+  .progress-step.active { color: var(--saffron); font-weight: 500; }
+  .progress-step.done { color: var(--green); }
+
+  .progress-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .progress-step.active .progress-dot { background: var(--saffron); color: white; }
+  .progress-step.done .progress-dot { background: var(--green); color: white; }
+
+  .progress-line { flex: 1; height: 1px; background: var(--border); margin: 0 8px; }
+
+  /* ── NOTIFICATION TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--ink);
+    color: white;
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    z-index: 300;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    animation: slideUp .3s ease;
+  }
+
+  .toast.show { display: flex; }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* ── DIVIDER ── */
+  .full-divider { height: 1px; background: var(--border); margin: 0 5%; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .how-grid { grid-template-columns: 1fr; }
+    .profile-layout { grid-template-columns: 1fr; }
+    .enroll-layout { grid-template-columns: 1fr; }
+    .enroll-left { display: none; }
+    .dashboard-layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="logo" onclick="showPage('home')">Chef<span>Connect</span></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('listing')">Browse chefs</a></li>
+    <li><a href="#" onclick="showPage('enroll')">Enroll as chef</a></li>
+    <li id="nav-dashboard" style="display:none;">
+  <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+</li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn btn-ghost" id="nav-login-btn" onclick="openLoginModal()">Chef Login</button>
+<button class="btn btn-ghost" id="nav-logout-btn" style="display:none;" onclick="handleLogout()">Logout</button>
+    <button class="btn btn-primary" onclick="showPage('listing')">Book a chef</button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     PAGE: HOME
+════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">🍳 Hyderabad's chef marketplace</div>
+      <h1>A <em>private chef</em>,<br>in your kitchen,<br>tonight.</h1>
+      <p class="hero-sub">Browse verified professional chefs, check availability, and book someone to cook at your home — for any occasion.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-large" onclick="showPage('listing')">Book a chef →</button>
+        <button class="btn btn-outline btn-large" onclick="showPage('enroll')">Enroll as chef</button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">120+</div>
+          <div class="hero-stat-label">Verified chefs</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">1,800+</div>
+          <div class="hero-stat-label">Bookings completed</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">4.8★</div>
+          <div class="hero-stat-label">Average rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-img">👨‍🍳</div>
+        <div class="hero-card-body">
+          <div class="hero-card-name">Raju Naidu</div>
+          <div class="hero-card-cuisine">South Indian · Hyderabadi</div>
+          <div class="hero-card-footer">
+            <div class="hero-card-rate">₹450/hr</div>
+            <div class="stars">★★★★★ 4.9</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-img">👩‍🍳</div>
+        <div class="hero-card-body">
+          <div class="hero-card-name">Priya Sharma</div>
+          <div class="hero-card-cuisine">Italian · Continental</div>
+          <div class="hero-card-footer">
+            <div class="hero-card-rate">₹600/hr</div>
+            <div class="stars">★★★★★ 4.8</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-img">🧑‍🍳</div>
+        <div class="hero-card-body">
+          <div class="hero-card-name">Mohammed Arif</div>
+          <div class="hero-card-cuisine">Mughlai · Hyderabadi</div>
+          <div class="hero-card-footer">
+            <div class="hero-card-rate">₹500/hr</div>
+            <div class="stars">★★★★☆ 4.7</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-img">👨‍🍳</div>
+        <div class="hero-card-body">
+          <div class="hero-card-name">Suresh Reddy</div>
+          <div class="hero-card-cuisine">North Indian · Street</div>
+          <div class="hero-card-footer">
+            <div class="hero-card-rate">₹380/hr</div>
+            <div class="stars">★★★★★ 4.9</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-divider"></div>
+
+  <div class="section">
+    <div class="section-label">How it works</div>
+    <div class="section-title">From browsing to biting<br>in three steps.</div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-icon">🔍</div>
+        <h3>Browse & filter chefs</h3>
+        <p>Filter by cuisine, price range, and rating. Every chef is verified with Aadhaar and PAN before they appear.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">📅</div>
+        <h3>Pick a date & pay</h3>
+        <p>Select an available date and time slot. See real-time availability. Pay securely via UPI or card — fully upfront.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">🍽️</div>
+        <h3>Chef cooks at your home</h3>
+        <p>Your chef arrives, cooks, and your kitchen smells incredible. Rate them after. We handle payment to the chef.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-divider"></div>
+
+  <div class="section" style="text-align:center; padding: 60px 5%;">
+    <div class="section-label">Ready to eat well?</div>
+    <div class="section-title" style="margin: 0 auto 16px;">Book a chef for any occasion.</div>
+    <p style="color:var(--ink-3); font-size:15px; margin-bottom:28px;">Birthdays, anniversaries, dinner parties, Sunday family meals — ChefConnect has a chef for it.</p>
+    <button class="btn btn-primary btn-large" onclick="showPage('listing')">Browse all chefs →</button>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════
+     PAGE: CHEF LISTING
+════════════════════════════════════ -->
+<div id="page-listing" class="page">
+  <div style="padding: 28px 5% 0; max-width:1200px; margin:0 auto;">
+    <h2 style="font-family:'Playfair Display',serif; font-size:28px; font-weight:600; margin-bottom:6px;">Browse chefs in Hyderabad</h2>
+    <p style="font-size:14px; color:var(--ink-3); margin-bottom:24px;">120 verified chefs available · Updated today</p>
+
+    <div class="filter-bar">
+      <span class="filter-label">Cuisine:</span>
+      <button class="filter-chip active" onclick="filterChips(this)">All</button>
+      <button class="filter-chip" onclick="filterChips(this)">South Indian</button>
+      <button class="filter-chip" onclick="filterChips(this)">North Indian</button>
+      <button class="filter-chip" onclick="filterChips(this)">Hyderabadi</button>
+      <button class="filter-chip" onclick="filterChips(this)">Italian</button>
+      <button class="filter-chip" onclick="filterChips(this)">Continental</button>
+      <button class="filter-chip" onclick="filterChips(this)">Chinese</button>
+      <span class="filter-label" style="margin-left:12px;">Rating:</span>
+      <button class="filter-chip" onclick="filterChips(this)">4★ & above</button>
+    </div>
+
+    <div class="chefs-grid">
+      <!-- Chef cards -->
+      <div class="chef-card" onclick="showPage('profile')">
+        <div class="chef-card-header c1">👨‍🍳<span class="avail-badge">Available</span></div>
+        <div class="chef-card-body">
+          <div class="chef-name">Raju Naidu</div>
+          <div class="chef-meta">📍 Banjara Hills &nbsp;·&nbsp; <span class="stars">★★★★★</span> 4.9 (48 reviews)</div>
+          <div class="chef-cuisines">
+            <span class="cuisine-tag">South Indian</span>
+            <span class="cuisine-tag">Hyderabadi</span>
+          </div>
+          <div class="chef-card-footer">
+            <div class="chef-rate">₹450 <span>/ hour</span></div>
+            <button class="btn btn-primary" style="padding:7px 16px; font-size:13px;">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chef-card" onclick="showPage('profile')">
+        <div class="chef-card-header c2">👩‍🍳<span class="avail-badge">Available</span></div>
+        <div class="chef-card-body">
+          <div class="chef-name">Priya Sharma</div>
+          <div class="chef-meta">📍 Jubilee Hills &nbsp;·&nbsp; <span class="stars">★★★★★</span> 4.8 (62 reviews)</div>
+          <div class="chef-cuisines">
+            <span class="cuisine-tag">Italian</span>
+            <span class="cuisine-tag">Continental</span>
+            <span class="cuisine-tag">Desserts</span>
+          </div>
+          <div class="chef-card-footer">
+            <div class="chef-rate">₹600 <span>/ hour</span></div>
+            <button class="btn btn-primary" style="padding:7px 16px; font-size:13px;">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chef-card" onclick="showPage('profile')">
+        <div class="chef-card-header c3">🧑‍🍳<span class="avail-badge busy">Busy today</span></div>
+        <div class="chef-card-body">
+          <div class="chef-name">Mohammed Arif</div>
+          <div class="chef-meta">📍 Secunderabad &nbsp;·&nbsp; <span class="stars">★★★★☆</span> 4.7 (35 reviews)</div>
+          <div class="chef-cuisines">
+            <span class="cuisine-tag">Mughlai</span>
+            <span class="cuisine-tag">Hyderabadi</span>
+          </div>
+          <div class="chef-card-footer">
+            <div class="chef-rate">₹500 <span>/ hour</span></div>
+            <button class="btn btn-outline" style="padding:7px 16px; font-size:13px;">View</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chef-card" onclick="showPage('profile')">
+        <div class="chef-card-header c4">👨‍🍳<span class="avail-badge">Available</span></div>
+        <div class="chef-card-body">
+          <div class="chef-name">Suresh Reddy</div>
+          <div class="chef-meta">📍 Madhapur &nbsp;·&nbsp; <span class="stars">★★★★★</span> 4.9 (71 reviews)</div>
+          <div class="chef-cuisines">
+            <span class="cuisine-tag">North Indian</span>
+            <span class="cuisine-tag">Street Food</span>
+          </div>
+          <div class="chef-card-footer">
+            <div class="chef-rate">₹380 <span>/ hour</span></div>
+            <button class="btn btn-primary" style="padding:7px 16px; font-size:13px;">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chef-card" onclick="showPage('profile')">
+        <div class="chef-card-header c5">👩‍🍳<span class="avail-badge">Available</span></div>
+        <div class="chef-card-body">
+          <div class="chef-name">Lakshmi Devi</div>
+          <div class="chef-meta">📍 Kukatpally &nbsp;·&nbsp; <span class="stars">★★★★★</span> 4.8 (29 reviews)</div>
+          <div class="chef-cuisines">
+            <span class="cuisine-tag">South Indian</span>
+            <span class="cuisine-tag">Healthy</span>
+          </div>
+          <div class="chef-card-footer">
+            <div class="chef-rate">₹350 <span>/ hour</span></div>
+            <button class="btn btn-primary" style="padding:7px 16px; font-size:13px;">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chef-card" onclick="showPage('profile')">
+        <div class="chef-card-header c6">🧑‍🍳<span class="avail-badge">Available</span></div>
+        <div class="chef-card-body">
+          <div class="chef-name">Vikram Patel</div>
+          <div class="chef-meta">📍 HITEC City &nbsp;·&nbsp; <span class="stars">★★★★☆</span> 4.6 (44 reviews)</div>
+          <div class="chef-cuisines">
+            <span class="cuisine-tag">Chinese</span>
+            <span class="cuisine-tag">Continental</span>
+          </div>
+          <div class="chef-card-footer">
+            <div class="chef-rate">₹420 <span>/ hour</span></div>
+            <button class="btn btn-primary" style="padding:7px 16px; font-size:13px;">Book</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     PAGE: CHEF PROFILE
+════════════════════════════════════ -->
+<div id="page-profile" class="page">
+  <div style="padding: 16px 5%; max-width:1200px; margin:0 auto;">
+    <button onclick="showPage('listing')" style="background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:14px;display:flex;align-items:center;gap:6px;margin-bottom:16px;">← Back to chefs</button>
+  </div>
+
+  <div class="profile-layout">
+    <div>
+      <div class="profile-hero">
+        <div class="profile-cover">👨‍🍳</div>
+        <div class="profile-info">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <div class="profile-name">Raju Naidu</div>
+              <div style="display:flex; gap:8px; align-items:center; margin-top:6px;">
+                <span class="stars" style="font-size:14px;">★★★★★</span>
+                <span style="font-size:13px; color:var(--ink-2);">4.9 · 48 reviews</span>
+                <span style="color:var(--border)">|</span>
+                <span style="font-size:13px; color:var(--ink-3);">📍 Banjara Hills</span>
+              </div>
+            </div>
+            <span class="avail-badge" style="position:static; font-size:12px; padding:5px 12px;">Available</span>
+          </div>
+
+          <div class="profile-stats">
+            <div><div class="profile-stat-num">120+</div><div class="profile-stat-label">Bookings</div></div>
+            <div><div class="profile-stat-num">4.9</div><div class="profile-stat-label">Rating</div></div>
+            <div><div class="profile-stat-num">6 yrs</div><div class="profile-stat-label">Experience</div></div>
+            <div><div class="profile-stat-num">₹450</div><div class="profile-stat-label">Per hour</div></div>
+          </div>
+
+          <div class="chef-cuisines">
+            <span class="cuisine-tag">South Indian</span>
+            <span class="cuisine-tag">Hyderabadi</span>
+            <span class="cuisine-tag">Biryani specialist</span>
+          </div>
+
+          <p class="profile-bio">Trained at IHM Hyderabad with 6 years of experience in home catering and private events. I specialize in authentic Hyderabadi biryani, traditional South Indian thalis, and festive menus. I bring all my own equipment and keep your kitchen clean.</p>
+
+          <div style="margin-top:20px;">
+            <div style="font-size:14px; font-weight:600; margin-bottom:12px;">Dish portfolio</div>
+            <div class="portfolio-grid">
+              <div class="portfolio-item">🍛</div>
+              <div class="portfolio-item">🥘</div>
+              <div class="portfolio-item">🫓</div>
+              <div class="portfolio-item">🍲</div>
+              <div class="portfolio-item">🥗</div>
+              <div class="portfolio-item">🍮</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-top:20px;">
+        <div style="font-size:15px; font-weight:600; margin-bottom:16px;">Reviews (48)</div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">👤</div>
+            <div>
+              <div class="review-name">Kavitha R.</div>
+              <div class="review-date">June 2026 · <span class="stars">★★★★★</span></div>
+            </div>
+          </div>
+          <div class="review-text">Raju cooked for my daughter's birthday — 25 guests. The biryani was absolutely authentic and the portions were generous. He was professional, on time, and left the kitchen spotless. Will definitely book again!</div>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar" style="background:#D1FAE5;">👤</div>
+            <div>
+              <div class="review-name">Arjun M.</div>
+              <div class="review-date">May 2026 · <span class="stars">★★★★★</span></div>
+            </div>
+          </div>
+          <div class="review-text">Booked Raju for our anniversary dinner. He prepared a full Hyderabadi feast — haleem, biryani, mirchi ka salan. Everything was perfect. My wife was thrilled.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKING PANEL -->
+    <div>
+      <div class="booking-panel">
+        <h3>Book Raju Naidu</h3>
+
+        <div class="form-group">
+          <label class="form-label">Select date</label>
+          <div style="font-size:12px; color:var(--ink-3); margin-bottom:8px;">Greyed dates are already booked</div>
+          <div class="mini-cal">
+            <div class="mini-cal-header">
+              <span class="mini-cal-month">June 2026</span>
+              <div>
+                <button class="mini-cal-nav">‹</button>
+                <button class="mini-cal-nav">›</button>
+              </div>
+            </div>
+            <div class="cal-grid">
+              <div class="cal-day-label">Su</div><div class="cal-day-label">Mo</div><div class="cal-day-label">Tu</div>
+              <div class="cal-day-label">We</div><div class="cal-day-label">Th</div><div class="cal-day-label">Fr</div><div class="cal-day-label">Sa</div>
+              <div class="cal-day past">1</div><div class="cal-day past">2</div><div class="cal-day past">3</div>
+              <div class="cal-day past">4</div><div class="cal-day past">5</div><div class="cal-day past">6</div><div class="cal-day past">7</div>
+              <div class="cal-day past">8</div><div class="cal-day past">9</div><div class="cal-day past">10</div>
+              <div class="cal-day today" id="today-cell">11</div>
+              <div class="cal-day booked">12</div><div class="cal-day booked">13</div><div class="cal-day booked">14</div>
+              <div class="cal-day" onclick="selectDay(this)">15</div><div class="cal-day" onclick="selectDay(this)">16</div>
+              <div class="cal-day booked">17</div><div class="cal-day" onclick="selectDay(this)">18</div>
+              <div class="cal-day" onclick="selectDay(this)">19</div><div class="cal-day" onclick="selectDay(this)">20</div><div class="cal-day" onclick="selectDay(this)">21</div>
+              <div class="cal-day" onclick="selectDay(this)">22</div><div class="cal-day booked">23</div>
+              <div class="cal-day" onclick="selectDay(this)">24</div><div class="cal-day" onclick="selectDay(this)">25</div>
+              <div class="cal-day" onclick="selectDay(this)">26</div><div class="cal-day" onclick="selectDay(this)">27</div>
+              <div class="cal-day" onclick="selectDay(this)">28</div><div class="cal-day" onclick="selectDay(this)">29</div><div class="cal-day" onclick="selectDay(this)">30</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row" style="margin-bottom:16px;">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Start time</label>
+            <select class="form-select" onchange="updateTotal()">
+              <option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+              <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+              <option>6:00 PM</option><option>7:00 PM</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Hours needed</label>
+            <select class="form-select" id="hours-select" onchange="updateTotal()">
+              <option value="2">2 hours</option><option value="3">3 hours</option>
+              <option value="4" selected>4 hours</option><option value="5">5 hours</option>
+              <option value="6">6 hours</option><option value="8">8 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input type="text" class="form-input" id="booking-name" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile number</label>
+          <input type="tel" class="form-input" id="booking-phone" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+  <label class="form-label">Email address</label>
+  <input type="email" class="form-input" id="booking-email" placeholder="you@example.com">
+</div>
+        <div class="form-group">
+          <label class="form-label">Your address</label>
+          <input type="text" class="form-input"  id="booking-address" placeholder="Flat, street, area, Hyderabad">
+        </div>
+        <div class="form-group">
+  <label class="form-label">Your address</label>
+  <input type="text" class="form-input" id="booking-address" placeholder="Flat, street, area, Hyderabad">
+  <button type="button" onclick="autoFillAddress()" 
+    style="margin-top:6px; background:none; border:1px solid var(--saffron); color:var(--saffron); 
+           border-radius:6px; padding:5px 12px; font-size:12px; cursor:pointer; width:100%;">
+    📍 Use my current location
+  </button>
+</div>
+
+        <div class="total-box">
+          <div>
+            <div class="total-label">Total amount</div>
+            <div class="total-breakdown" id="breakdown-text">4 hrs × ₹450/hr</div>
+          </div>
+          <div class="total-amount" id="total-display">₹1,800</div>
+        </div>
+
+        <div style="font-size:12px; color:var(--ink-3); margin-bottom:16px; display:flex; gap:16px;">
+          <span>✓ Full refund if cancelled</span>
+          <span>✓ Secure UPI / card</span>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%; justify-content:center; padding:13px;" onclick="openPayment()">Proceed to pay →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     PAGE: CHEF ENROLL
+════════════════════════════════════ -->
+<div id="page-enroll" class="page">
+  <div class="enroll-layout">
+    <div class="enroll-left">
+      <h2>Earn doing what you love most.</h2>
+      <p>Join 120+ professional chefs already earning on ChefConnect. Set your own rate, manage your schedule, and get paid directly after every job.</p>
+      <div class="enroll-perk"><div class="enroll-perk-icon">💰</div>Keep 85% of every booking</div>
+      <div class="enroll-perk"><div class="enroll-perk-icon">📅</div>You control your schedule</div>
+      <div class="enroll-perk"><div class="enroll-perk-icon">🔒</div>Secure digital payments</div>
+      <div class="enroll-perk"><div class="enroll-perk-icon">⭐</div>Build your reputation online</div>
+      <div class="enroll-perk"><div class="enroll-perk-icon">🚀</div>Grow with referral bonuses</div>
+    </div>
+    <div class="enroll-right">
+      <h3>Create your chef profile</h3>
+      <p>Takes about 5 minutes. You'll go live once our team verifies your documents.</p>
+
+      <div class="progress-steps">
+        <div class="progress-step active"><div class="progress-dot">1</div> Basic info</div>
+        <div class="progress-line"></div>
+        <div class="progress-step"><div class="progress-dot">2</div> Cuisine & rate</div>
+        <div class="progress-line"></div>
+        <div class="progress-step"><div class="progress-dot">3</div> Documents</div>
+        <div class="progress-line"></div>
+        <div class="progress-step"><div class="progress-dot">4</div> Bank details</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full name *</label>
+          <input type="text" class="form-input" id="enroll-name"placeholder="As on Aadhaar card">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile number *</label>
+          <input type="tel" class="form-input" id="enroll-phone" placeholder="+91 98765 43210">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email address *</label>
+          <input type="email" class="form-input" id="enroll-email"placeholder="chef@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <input type="password" class="form-input" id="enroll-password" placeholder="Min 8 characters">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Cuisine specialties * (select all that apply)</label>
+        <div class="cuisine-checkboxes">
+          <label class="cuisine-cb"><input type="checkbox"> South Indian</label>
+          <label class="cuisine-cb"><input type="checkbox" checked> North Indian</label>
+          <label class="cuisine-cb"><input type="checkbox"> Hyderabadi</label>
+          <label class="cuisine-cb"><input type="checkbox"> Italian</label>
+          <label class="cuisine-cb"><input type="checkbox"> Chinese</label>
+          <label class="cuisine-cb"><input type="checkbox"> Continental</label>
+          <label class="cuisine-cb"><input type="checkbox"> Mughlai</label>
+          <label class="cuisine-cb"><input type="checkbox"> Street Food</label>
+          <label class="cuisine-cb"><input type="checkbox"> Desserts</label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Hourly rate (₹) *</label>
+          <input type="number" class="form-input" id="enroll-rate" placeholder="e.g. 450" min="200">
+          <div style="font-size:11px; color:var(--ink-3); margin-top:4px;">This cannot be changed after registration</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Years of experience *</label>
+          <select class="form-select">
+            <option>1–2 years</option>
+            <option>3–5 years</option>
+            <option selected>5–10 years</option>
+            <option>10+ years</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Short bio</label>
+        <textarea class="form-input" rows="3" id="enroll-bio"placeholder="Tell users about your cooking style, specialties, and experience..." style="resize:vertical;"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Aadhaar card *</label>
+          <div class="upload-box" onclick="document.getElementById('aadhaar-input').click()">
+  <input type="file" id="aadhaar-input" accept=".pdf,image/*" style="display:none" onchange="handleUpload(this,'aadhaar-text')">
+  <div class="upload-icon">📄</div>
+  <div class="upload-text" id="aadhaar-text">Click to upload PDF or image<br><span style="color:var(--ink-4);">Max 5MB</span></div>
+</div>
+        <div class="form-group">
+          <label class="form-label">PAN card *</label>
+          <div class="upload-box" onclick="document.getElementById('pan-input').click()">
+  <input type="file" id="pan-input" accept=".pdf,image/*" style="display:none" onchange="handleUpload(this,'pan-text')">
+  <div class="upload-icon">📋</div>
+  <div class="upload-text" id="pan-text">Click to upload PDF or image<br><span style="color:var(--ink-4);">Max 5MB</span></div>
+</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--saffron-light); border-radius:var(--radius-sm); padding:14px; margin-bottom:20px; font-size:13px; color:var(--ink-2);">
+        🔒 Your documents are encrypted and only reviewed by our verification team. They are never shared publicly.
+      </div>
+      <button class="btn btn-primary btn-large" style="width:100%; justify-content:center;" 
+  onclick="submitChefEnrollment()">
+  Submit application →
+</button>
+
+      
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     PAGE: CHEF DASHBOARD
+════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div style="padding: 0 16px 20px; border-bottom: 1px solid var(--border); margin-bottom: 8px;">
+        <div style="display:flex; align-items:center; gap:10px; padding: 0 12px;">
+          <div style="width:38px; height:38px; border-radius:50%; background:var(--saffron-light); display:flex; align-items:center; justify-content:center; font-size:20px;">👨‍🍳</div>
+          <div>
+            <div style="font-size:14px; font-weight:600;">Raju Naidu</div>
+            <div style="font-size:11px; color:var(--green); font-weight:500;">● Verified</div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Main</div>
+        <a class="sidebar-item active"><span class="sidebar-icon">📊</span> Overview</a>
+        <a class="sidebar-item"><span class="sidebar-icon">📋</span> My orders</a>
+        <a class="sidebar-item"><span class="sidebar-icon">📅</span> Schedule</a>
+        <a class="sidebar-item"><span class="sidebar-icon">💰</span> Earnings</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        <a class="sidebar-item"><span class="sidebar-icon">👤</span> My profile</a>
+        <a class="sidebar-item"><span class="sidebar-icon">🏦</span> Bank account</a>
+        <a class="sidebar-item"><span class="sidebar-icon">⚠️</span> Complaints</a>
+        <a class="sidebar-item"><span class="sidebar-icon">🎁</span> Referrals</a>
+      </div>
+    </aside>
+
+    <main class="dash-content">
+      <div class="dash-greeting">Good afternoon, Raju 👋</div>
+      <div class="dash-date">Thursday, 11 June 2026</div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-label">This month's earnings</div>
+          <div class="stat-card-num">₹18,700</div>
+          <div class="stat-card-sub">↑ 12% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Bookings this month</div>
+          <div class="stat-card-num">11</div>
+          <div class="stat-card-sub">↑ 2 more than last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Average rating</div>
+          <div class="stat-card-num">4.9 ★</div>
+          <div class="stat-card-sub">Based on 48 reviews</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Pending payout</div>
+          <div class="stat-card-num">₹3,400</div>
+          <div class="stat-card-sub" style="color:var(--ink-3);">After 2 completions</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div>
+          <div class="dash-card" style="margin-bottom:20px;">
+            <div class="dash-card-title">Upcoming orders</div>
+            <div class="order-row">
+              <div class="order-avatar">👤</div>
+              <div>
+                <div class="order-name">Kavitha Rao</div>
+                <div class="order-detail">Jun 15 · 6:00 PM · 3 hrs · Banjara Hills</div>
+              </div>
+              <div style="margin-left:auto; text-align:right;">
+                <div class="order-amount">₹1,350</div>
+                <span class="order-status status-confirmed">Confirmed</span>
+              </div>
+            </div>
+            <div class="order-row">
+              <div class="order-avatar" style="background:#D1FAE5">👤</div>
+              <div>
+                <div class="order-name">Arjun Mehta</div>
+                <div class="order-detail">Jun 18 · 7:00 PM · 4 hrs · Jubilee Hills</div>
+              </div>
+              <div style="margin-left:auto; text-align:right;">
+                <div class="order-amount">₹1,800</div>
+                <span class="order-status status-confirmed">Confirmed</span>
+              </div>
+            </div>
+            <div class="order-row">
+              <div class="order-avatar" style="background:#EDE9FE">👤</div>
+              <div>
+                <div class="order-name">Sneha Pillai</div>
+                <div class="order-detail">Jun 24 · 12:00 PM · 5 hrs · Madhapur</div>
+              </div>
+              <div style="margin-left:auto; text-align:right;">
+                <div class="order-amount">₹2,250</div>
+                <span class="order-status status-pending">Upcoming</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card-title">Monthly orders (2026)</div>
+            <div class="bar-chart">
+              <div class="bar-col"><div class="bar" style="height:50px;"></div><div class="bar-label">Jan</div></div>
+              <div class="bar-col"><div class="bar" style="height:65px;"></div><div class="bar-label">Feb</div></div>
+              <div class="bar-col"><div class="bar" style="height:45px;"></div><div class="bar-label">Mar</div></div>
+              <div class="bar-col"><div class="bar" style="height:80px;"></div><div class="bar-label">Apr</div></div>
+              <div class="bar-col"><div class="bar" style="height:70px;"></div><div class="bar-label">May</div></div>
+              <div class="bar-col"><div class="bar current" style="height:95px;"></div><div class="bar-label" style="color:var(--saffron); font-weight:600;">Jun</div></div>
+              <div class="bar-col"><div class="bar" style="height:20px; opacity:.2;"></div><div class="bar-label">Jul</div></div>
+              <div class="bar-col"><div class="bar" style="height:15px; opacity:.2;"></div><div class="bar-label">Aug</div></div>
+              <div class="bar-col"><div class="bar" style="height:10px; opacity:.2;"></div><div class="bar-label">Sep</div></div>
+              <div class="bar-col"><div class="bar" style="height:8px; opacity:.2;"></div><div class="bar-label">Oct</div></div>
+              <div class="bar-col"><div class="bar" style="height:5px; opacity:.2;"></div><div class="bar-label">Nov</div></div>
+              <div class="bar-col"><div class="bar" style="height:5px; opacity:.2;"></div><div class="bar-label">Dec</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="dash-card" style="margin-bottom:20px;">
+            <div class="dash-card-title">June schedule</div>
+            <div class="mini-cal">
+              <div class="cal-grid">
+                <div class="cal-day-label">Su</div><div class="cal-day-label">Mo</div><div class="cal-day-label">Tu</div>
+                <div class="cal-day-label">We</div><div class="cal-day-label">Th</div><div class="cal-day-label">Fr</div><div class="cal-day-label">Sa</div>
+                <div class="cal-day past" style="font-size:11px;">1</div><div class="cal-day past" style="font-size:11px;">2</div><div class="cal-day past" style="font-size:11px;">3</div>
+                <div class="cal-day past" style="font-size:11px;">4</div><div class="cal-day past" style="font-size:11px;">5</div><div class="cal-day past" style="font-size:11px;">6</div><div class="cal-day past" style="font-size:11px;">7</div>
+                <div class="cal-day past" style="font-size:11px;">8</div><div class="cal-day past" style="font-size:11px;">9</div><div class="cal-day past" style="font-size:11px;">10</div>
+                <div class="cal-day today" style="font-size:11px;">11</div>
+                <div class="cal-day" style="font-size:11px;">12</div><div class="cal-day booked" style="font-size:11px;">13</div><div class="cal-day" style="font-size:11px;">14</div>
+                <div class="cal-day booked" style="font-size:11px;">15</div><div class="cal-day" style="font-size:11px;">16</div>
+                <div class="cal-day" style="font-size:11px;">17</div><div class="cal-day booked" style="font-size:11px;">18</div>
+                <div class="cal-day" style="font-size:11px;">19</div><div class="cal-day" style="font-size:11px;">20</div><div class="cal-day" style="font-size:11px;">21</div>
+                <div class="cal-day" style="font-size:11px;">22</div><div class="cal-day" style="font-size:11px;">23</div>
+                <div class="cal-day booked" style="font-size:11px;">24</div><div class="cal-day" style="font-size:11px;">25</div>
+                <div class="cal-day" style="font-size:11px;">26</div><div class="cal-day" style="font-size:11px;">27</div>
+                <div class="cal-day" style="font-size:11px;">28</div><div class="cal-day" style="font-size:11px;">29</div><div class="cal-day" style="font-size:11px;">30</div>
+              </div>
+            </div>
+            <div style="margin-top:10px; display:flex; gap:16px; font-size:11px; color:var(--ink-3);">
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--saffron-light);border:1px solid var(--saffron);margin-right:4px;"></span>Booked</span>
+              <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--cream);border:1px solid var(--border);margin-right:4px;"></span>Available</span>
+            </div>
+            <button class="btn btn-outline" style="width:100%; justify-content:center; margin-top:12px; font-size:13px;" onclick="showToast('Date blocked successfully')">+ Block a date</button>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card-title">Recent complaints</div>
+            <div style="text-align:center; padding:20px 0; color:var(--ink-3); font-size:13px;">
+              <div style="font-size:28px; margin-bottom:8px;">✅</div>
+              No complaints received.<br>Keep up the great work!
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ── PAYMENT MODAL ── -->
+<div class="modal-overlay" id="payment-modal">
+  <div class="modal">
+    <div id="payment-step-1">
+      <div class="modal-title">Complete your booking</div>
+      <div class="modal-sub">Raju Naidu · Jun 15 · 4 hrs · ₹1,800</div>
+
+      <div style="background:var(--cream); border-radius:var(--radius-sm); padding:14px; margin-bottom:20px; font-size:13px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:var(--ink-3);">Booking amount</span><span>₹1,800</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="color:var(--ink-3);">Platform fee (15%)</span><span>₹270</span></div>
+        <div style="display:flex; justify-content:space-between; font-weight:600; padding-top:8px; border-top:1px solid var(--border);"><span>You pay</span><span style="color:var(--saffron);">₹1,800</span></div>
+        <div style="font-size:11px; color:var(--ink-3); margin-top:6px;">Chef receives ₹1,530 after platform fee</div>
+      </div>
+
+      <div style="font-size:13px; font-weight:500; margin-bottom:10px;">Choose payment method</div>
+      <div class="payment-method selected" onclick="selectPayment(this)">
+        <div class="payment-method-icon">📱</div>
+        <div>
+          <div class="payment-method-name">UPI</div>
+          <div class="payment-method-detail">Google Pay, PhonePe, Paytm</div>
+        </div>
+      </div>
+      <div class="payment-method" onclick="selectPayment(this)">
+        <div class="payment-method-icon">💳</div>
+        <div>
+          <div class="payment-method-name">Credit / Debit card</div>
+          <div class="payment-method-detail">Visa, Mastercard, RuPay</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-large" style="width:100%; justify-content:center; margin-top:20px;" onclick="processPayment()">Pay ₹1,800 →</button>
+      <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:8px;" onclick="closePayment()">Cancel</button>
+    </div>
+
+    <div id="payment-step-2" style="display:none;" class="success-screen">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Booking confirmed!</div>
+      <div class="success-sub">Raju Naidu is booked for June 15 at 6:00 PM. You'll get a confirmation SMS and email shortly.</div>
+      <div style="background:var(--saffron-light); border-radius:var(--radius-sm); padding:14px; text-align:left; margin-bottom:20px; font-size:13px;">
+        <div style="font-weight:600; margin-bottom:8px; color:var(--saffron);">Booking details</div>
+        <div style="color:var(--ink-2);">👨‍🍳 Raju Naidu</div>
+        <div style="color:var(--ink-2);">📅 June 15, 2026 · 6:00 PM · 4 hrs</div>
+        <div style="color:var(--ink-2);">📍 Your address, Hyderabad</div>
+        <div style="color:var(--ink-2);">💰 Paid ₹1,800 via UPI</div>
+      </div>
+      <button class="btn btn-primary btn-large" style="width:100%; justify-content:center;" onclick="closePayment(); showPage('listing')">Back to home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast">✓ <span id="toast-msg">Done!</span></div>
+
+<script>
+    const API_URL = 'http://localhost:3001';
+let userLocation = { lat: null, lng: null };
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function filterChips(el) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+
+  function selectDay(el) {
+    document.querySelectorAll('.cal-day.selected').forEach(d => d.classList.remove('selected'));
+    el.classList.add('selected');
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const rate = 450;
+    const hours = parseInt(document.getElementById('hours-select')?.value || 4);
+    const total = rate * hours;
+    const display = document.getElementById('total-display');
+    const breakdown = document.getElementById('breakdown-text');
+    if (display) display.textContent = '₹' + total.toLocaleString('en-IN');
+    if (breakdown) breakdown.textContent = hours + ' hrs × ₹' + rate + '/hr';
+  }
+function openPayment() {
+  const name    = document.querySelector('input[placeholder*="name"]')?.value.trim();
+  const phone   = document.querySelector('input[type="tel"]')?.value.trim();
+  const email   = document.getElementById('booking-email')?.value.trim();
+  const address = document.getElementById('booking-address')?.value.trim();
+  const day     = document.querySelector('.cal-day.selected');
+
+  const emailValid  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const phoneValid  = /^\d{10}$/.test(phone) || /^\+91\s?\d{10}$/.test(phone);
+
+  if (!day)          { showToast('⚠ Please select a date'); return; }
+  if (!name)         { showToast('⚠ Please enter your name'); return; }
+  if (!phoneValid)   { showToast('⚠ Please enter a valid mobile number'); return; }
+  if (!emailValid)   { showToast('⚠ Please enter a valid email address'); return; }
+  if (!address)      { showToast('⚠ Please enter your address'); return; }
+
+  document.getElementById('payment-modal').classList.add('open');
+  document.getElementById('payment-step-1').style.display = 'block';
+  document.getElementById('payment-step-2').style.display = 'none';
+}
+
+  function closePayment() {
+    document.getElementById('payment-modal').classList.remove('open');
+  }
+
+  function selectPayment(el) {
+    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function handleUpload(input, labelId) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('⚠ File too large — max 5MB');
+    input.value = '';
+    return;
+  }
+  document.getElementById(labelId).innerHTML = 
+    `✓ ${file.name}<br><span style="color:var(--ink-4);">${(file.size/1024).toFixed(0)} KB</span>`;
+  showToast('✓ ' + file.name + ' selected');
+}
+
+  async function submitChefEnrollment() {
+  const name     = document.getElementById('enroll-name')?.value.trim();
+  const phone    = document.getElementById('enroll-phone')?.value.trim();
+  const email    = document.getElementById('enroll-email')?.value.trim();
+  const password = document.getElementById('enroll-password')?.value.trim();
+  const rate     = document.getElementById('enroll-rate')?.value.trim();
+  const bio      = document.getElementById('enroll-bio')?.value.trim();
+
+  // Basic validation
+  if (!name || !phone || !email || !password || !rate) {
+    showToast('⚠ Please fill all required fields');
+    return;
+  }
+  if (password.length < 8) {
+    showToast('⚠ Password must be at least 8 characters');
+    return;
+  }
+
+  await signUpUser(email, password, name, phone, rate, bio);
+}
+ // Function to capture GPS location right before payment processing
+async function getLocationBeforePayment() {
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) {
+      resolve(null);
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        console.log(`📍 Location acquired: ${userLocation.lat}, ${userLocation.lng}`);
+        resolve(userLocation);
+      },
+      (err) => {
+        console.warn('Location access denied. Continuing with text address fallback.');
+        resolve(null); 
+      },
+      { timeout: 8000, maximumAge: 60000 }
+    );
+  });
+}
+function autoFillAddress() {
+  if (!navigator.geolocation) {
+    showToast('Geolocation not supported by your browser');
+    return;
+  }
+  showToast('Fetching your location...');
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${userLocation.lat}&lon=${userLocation.lng}&format=json`
+        );
+        const data = await res.json();
+        const addr = data.display_name || `${userLocation.lat}, ${userLocation.lng}`;
+        document.getElementById('booking-address').value = addr;
+        showToast('✓ Address filled from your location');
+      } catch (e) {
+        document.getElementById('booking-address').value = `${userLocation.lat}, ${userLocation.lng}`;
+        showToast('✓ Coordinates filled (no address found)');
+      }
+    },
+    (err) => {
+      showToast('⚠ Location access denied — please type your address');
+    },
+    { timeout: 8000 }
+  );
+}
+// REPLACE YOUR OLD processPayment() WITH THIS LIVE VERSION:
+async function processPayment() {
+  const btn = document.querySelector('#payment-modal .btn-primary');
+  if (btn) {
+    btn.innerHTML = '<span class="spinner"></span> Processing Booking...';
+    btn.disabled = true;
+  }
+
+  try {
+    // 1. Fetch GPS coordinates
+    await getLocationBeforePayment();
+
+    // 2. Collect entries from your existing form inputs
+    const userName     = document.querySelector('input[placeholder*="name"]')?.value || 'Guest User';
+    const userEmail    = document.getElementById('booking-email')?.value;
+    const userPhone    = document.querySelector('input[type="tel"]')?.value;
+    const userAddress  = document.querySelector('input[placeholder*="address"]')?.value || 'No address provided';
+    const selectedDay  = document.querySelector('.cal-day.selected')?.textContent || '15';
+    const startTime    = document.querySelector('select')?.value || '18:00';
+    const hours        = parseInt(document.getElementById('hours-select')?.value || '4');
+
+    // 3. Fire the request directly to your local server engine
+    const response = await fetch(`${API_URL}/api/bookings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chef_id: 'c91651fb-9013-4b9e-b7bf-a4f281e9cf8c', // Your active Chef ID from your Supabase table!
+        user_name: userName,
+        user_email: userEmail,
+        user_phone: userPhone,
+        user_address: userAddress,
+        user_lat: userLocation.lat,
+        user_lng: userLocation.lng,
+        booking_date: `2026-06-${selectedDay.trim().padStart(2, '0')}`,
+        start_time: startTime,
+        hours: hours,
+        total_amount: hours * 450, 
+        payment_id: 'pay_dev_mock_123'
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      // Transition to your confirmation card (Your original visual code!)
+      document.getElementById('payment-step-1').style.display = 'none';
+      document.getElementById('payment-step-2').style.display = 'block';
+    } else {
+      alert("Server couldn't process booking: " + result.error);
+    }
+
+  } catch (err) {
+    console.error("Connection failed:", err);
+    alert("Could not reach the backend API server. Make sure it's running via terminal on port 3001.");
+  } finally {
+    if (btn) {
+      btn.innerHTML = 'Pay Now →';
+      btn.disabled = false;
+    }
+  }
+}
+
+  function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.classList.toggle('error', msg.startsWith('⚠'));
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+  document.getElementById('payment-modal').addEventListener('click', function(e) {
+    if (e.target === this) closePayment();
+  });
+</script>
+
+<script type="module">
+  // 1. Import the Supabase library directly into your browser
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+  // 2. Initialize connection to your database
+  const supabase = createClient(
+    'https://prtsjwfhxdrfjsutpcrt.supabase.co', // Your Project URL
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBydHNqd2ZoeGRyZmpzdXRwY3J0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTI3MTM3MywiZXhwIjoyMDk2ODQ3MzczfQ.wEHs3i8LTmA1i4juUYIuv-FstfM_XNMrX5ZYEjZOvKk' // Your Publishable Key
+  )
+
+  // 3. User Sign-Up Function
+  // Call this function when a new user fills out your "Create Account" or "Sign Up" form fields
+  async function signUpUser(email, password, fullName, phone, rate, bio) {
+  try {
+    // 1. Create auth account
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: { data: { full_name: fullName } }
+    });
+
+    if (error) throw error;
+
+    // 2. Save chef profile to chefs table
+    const { error: chefError } = await supabase
+      .from('chefs')
+      .insert([{
+        id:         data.user.id,   // links to auth account
+        name:       fullName,
+        email:      email,
+        phone:      phone,
+        rate:       parseInt(rate),
+        bio:        bio,
+        status:     'pending',      // admin reviews before going live
+        created_at: new Date()
+      }]);
+
+    if (chefError) throw chefError;
+
+    showToast('✓ Application submitted! Check your email to verify your account.');
+    showPage('home');
+
+  } catch (err) {
+    console.error('Signup error:', err.message);
+    showToast('⚠ ' + err.message);
+  }
+}
+
+window.signUpUser = signUpUser;
+
+  // 4. User Login Function
+  // Call this function when someone signs in to your app
+  async function loginUser(email, password) {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+    if (error) throw error;
+    
+    // Call onChefLoggedIn directly from here since we're in the module
+    onChefLoggedIn(data.session.user);
+    closeLoginModal();
+    showPage('dashboard');
+    
+    return data.session;
+  } catch (err) {
+    console.error("Login error:", err.message);
+    document.getElementById('login-error').textContent = 'Login failed: ' + err.message;
+    document.getElementById('login-error').style.display = 'block';
+    return null;
+  }
+}
+
+window.loginUser = loginUser;
+  // Track chef session
+let chefSession = null;
+
+function openLoginModal() {
+  document.getElementById('login-modal').classList.add('open');
+  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+}
+
+function closeLoginModal() {
+  document.getElementById('login-modal').classList.remove('open');
+}
+
+async function handleChefLogin() {
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+
+  if (!email || !password) {
+    document.getElementById('login-error').textContent = 'Please enter email and password';
+    document.getElementById('login-error').style.display = 'block';
+    return;
+  }
+
+  // loginUser now handles everything internally
+  await loginUser(email, password);
+}
+
+
+function onChefLoggedIn(user) {
+  // Show dashboard nav, hide login button
+  document.getElementById('nav-dashboard').style.display = 'block';
+  document.getElementById('nav-login-btn').style.display = 'none';
+  document.getElementById('nav-logout-btn').style.display = 'block';
+
+  // Update dashboard greeting with chef's name
+  const name = user.user_metadata?.full_name || user.email;
+  const greeting = document.querySelector('.dash-greeting');
+  if (greeting) greeting.textContent = `Good afternoon, ${name.split(' ')[0]} 👋`;
+
+  showToast(`Welcome back, ${name.split(' ')[0]}! ✓`);
+}
+
+function handleLogout() {
+  chefSession = null;
+
+  // Hide dashboard, show login
+  document.getElementById('nav-dashboard').style.display = 'none';
+  document.getElementById('nav-login-btn').style.display = 'block';
+  document.getElementById('nav-logout-btn').style.display = 'none';
+
+  showPage('home');
+  showToast('Logged out successfully');
+}
+
+// Close login modal when clicking outside
+document.getElementById('login-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeLoginModal();
+});
+
+  // Make functions globally available to your HTML buttons
+  window.signUpUser = signUpUser;
+  window.loginUser = loginUser;
+  window.handleChefLogin = handleChefLogin;
+window.closeLoginModal = closeLoginModal;
+window.openLoginModal = openLoginModal;
+window.handleLogout = handleLogout;
+</script>
+<!-- CHEF LOGIN MODAL -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal" style="width:380px;">
+    <div class="modal-title">Chef Login</div>
+    <div class="modal-sub">Access your dashboard</div>
+
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input type="email" class="form-input" id="login-email" placeholder="chef@email.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="login-password" placeholder="Your password">
+    </div>
+
+    <div id="login-error" style="color:#dc2626; font-size:13px; margin-bottom:12px; display:none;">
+      Invalid email or password
+    </div>
+
+    <button class="btn btn-primary btn-large" 
+      style="width:100%; justify-content:center;" 
+      onclick="handleChefLogin()">
+      Login →
+    </button>
+    <button class="btn btn-ghost" 
+      style="width:100%; justify-content:center; margin-top:8px;" 
+      onclick="closeLoginModal()">
+      Cancel
+    </button>
+
+    <p style="font-size:12px; color:var(--ink-3); text-align:center; margin-top:16px;">
+      Not a chef yet? 
+      <a href="#" onclick="closeLoginModal(); showPage('enroll')" 
+        style="color:var(--saffron); text-decoration:none;">
+        Enroll here →
+      </a>
+    </p>
+  </div>
+</div>
+</body>
+</html>
